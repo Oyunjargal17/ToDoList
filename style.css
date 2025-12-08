@@ -49,3 +49,11 @@
   gap: 10px;
   background-color: #3c82f6;
 }
+.task-container{
+  margin-top: 20px;
+}
+.task {
+display: flex;
+  width: 180px;
+  justify-content: space-between;
+}
