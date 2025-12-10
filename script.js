@@ -19,7 +19,6 @@ const add = () => {
     isComplete: false,
   };
   tasks.push(task);
-  console.log(tasks);
 
   remainderTasks();
   toggleComplete();
@@ -28,15 +27,18 @@ const add = () => {
   taskId++;
 };
 const createTaskElement = (task) => {
-  return `<div class="task">
+  return `  <div class="task">
+      <div class="task-left">
         <input type="checkbox" class="task_checkbox" onclick="toggleComplete(${
           task.id
         })" ${task.isComplete && "checked"}/>
         <p class="task_text">${task.text}</p>
-        <button class="task_delete" onclick="deleteTask(${
-          task.id
-        })">delete</button>
-      </div>`;
+      </div>
+
+      <button class="task_delete" onclick="deleteTask(${task.id})">
+        Delete
+      </button>
+    </div>`;
 };
 const remainderTasks = () => {
   let taskElementsHTML = "";
@@ -70,7 +72,7 @@ const toggleComplete = (taskId) => {
 };
 
 const counterElement = () => {
-  counters.innerHTML = tasks.length;
+  // counters.innerHTML = tasks.length;
   console.log(tasks.length);
 };
 

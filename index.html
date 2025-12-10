@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do list</title>
+    <title>Document</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="body">
@@ -11,27 +11,30 @@
       <div>
         <h1 class="garchig">To-Do list</h1>
       </div>
-      <div>
+      <div class="input_style">
         <input
-          class="text_input"
           type="text"
           id="input"
-          placeholder="Add a new task"
+          class="text_input"
+          placeholder="Add a new task..."
         />
         <button id="add" class="add_style">Add</button>
       </div>
-      <div class="tasks-container" id="task_container">
-        <div>
-          <input type="checkbox" class="task_checkbox" />
-        </div>
-        <div>
-          <button id="counter">All</button>
-          <div>
-            <p>Tooldog text</p>
-          </div>
-        </div>
+      <div class="buttons">
+        <button class="allBtn">All</button>
+        <button class="activeBtn">Active</button>
+        <button class="completedBtn">Completed</button>
+      </div>
+      <div id="task_container"></div>
+      <div class="noTasks">
+        <p class="noTasksStyle">No tasks yet. Add one above!</p>
+      </div>
+      <div class="poweredBy">
+        <p class="poweredText">Powered by</p>
+        <p class="pineconeText">Pinecone academy</p>
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
