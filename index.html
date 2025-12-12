@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>To-do list</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="body">
@@ -21,20 +21,37 @@
         <button id="add" class="add_style">Add</button>
       </div>
       <div class="buttons">
-        <button class="allBtn">All</button>
-        <button class="activeBtn">Active</button>
-        <button class="completedBtn">Completed</button>
+        <button class="allBtn filter-btn" onclick="filterTodos('all')">
+          All
+        </button>
+        <button class="activeBtn filter-btn" onclick="filterTodos('active')">
+          Active
+        </button>
+        <button
+          class="completedBtn filter-btn"
+          onclick="filterTodos('completed')"
+        >
+          Completed
+        </button>
       </div>
       <div id="task_container"></div>
       <div class="noTasks">
         <p class="noTasksStyle">No tasks yet. Add one above!</p>
+      </div>
+      <div class="foother">
+        <div class="task-count">0 of 0 tasks completed</div>
+        <button
+          class="clear-copmleted"
+          onclick="clearCompleted('clearCompleted')"
+        >
+          Clear Completed
+        </button>
       </div>
       <div class="poweredBy">
         <p class="poweredText">Powered by</p>
         <p class="pineconeText">Pinecone academy</p>
       </div>
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>

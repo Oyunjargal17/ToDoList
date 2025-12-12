@@ -2,14 +2,16 @@ const input = document.getElementById("input");
 const addBtn = document.getElementById("add");
 const task_container = document.getElementById("task_container");
 const counters = document.getElementById("counter");
+const filterButtons = document.getElementsByClassName("filter-btn");
 
 let tasks = [];
 let taskId = 1;
+let todoFilter = "all";
 
 const add = () => {
   const inputText = input.value.trim();
   if (inputText === "") {
-    alert("Task-iin utgiig oruulna uu?");
+    alert("Та текстээ бичнэ үү!");
     return;
   }
 
@@ -20,10 +22,11 @@ const add = () => {
   };
   tasks.push(task);
 
-  remainderTasks();
+  remainderTasks(tasks);
   toggleComplete();
   clearInput();
   counterElement();
+  updateCounter();
   taskId++;
 };
 const createTaskElement = (task) => {
@@ -31,8 +34,10 @@ const createTaskElement = (task) => {
       <div class="task-left">
         <input type="checkbox" class="task_checkbox" onclick="toggleComplete(${
           task.id
-        })" ${task.isComplete && "checked"}/>
-        <p class="task_text">${task.text}</p>
+        })" ${task.isComplete ? "checked" : ""}/>
+        <p class="task_text ${task.isComplete ? "task_text_completed" : ""}">${
+    task.text
+  }</p>
       </div>
 
       <button class="task_delete" onclick="deleteTask(${task.id})">
@@ -41,8 +46,18 @@ const createTaskElement = (task) => {
     </div>`;
 };
 const remainderTasks = () => {
+  const filteredTasks = filteredTodotasks();
+  const noTasksDiv = document.querySelector(".noTasks");
+
+  if (filteredTasks.length === 0) {
+    noTasksDiv.style.display = "flex";
+    task_container.innerHTML = "";
+  } else {
+    noTasksDiv.style.display = "none";
+  }
+
   let taskElementsHTML = "";
-  tasks.forEach((task) => {
+  filteredTasks.forEach((task) => {
     const taskElement = createTaskElement(task);
     taskElementsHTML += taskElement;
   });
@@ -50,15 +65,19 @@ const remainderTasks = () => {
 };
 
 const deleteTask = (taskId) => {
-  const updateTasks = tasks.filter((task) => {
-    if (task.id === taskId) {
-      return false;
-    } else {
-      return true;
-    }
-  });
-  tasks = updateTasks;
-  remainderTasks();
+  if (confirm("Та итгэлтэй байна уу?")) {
+    const updateTasks = tasks.filter((task) => {
+      if (task.id === taskId) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    tasks = updateTasks;
+    remainderTasks(tasks);
+    updateCounter();
+    return;
+  }
 };
 
 const toggleComplete = (taskId) => {
@@ -69,15 +88,49 @@ const toggleComplete = (taskId) => {
       return task;
     }
   });
-};
 
+  remainderTasks(tasks);
+  updateCounter();
+};
 const counterElement = () => {
-  // counters.innerHTML = tasks.length;
   console.log(tasks.length);
 };
 
 const clearInput = () => {
   input.value = "";
 };
+const filterTodos = (filter) => {
+  for (let i = 0; i < filterButtons.length; i++) {
+    const filterBtn = filterButtons[i];
+    if (filterBtn.className.includes(filter)) {
+      filterBtn.classList.add("toggleClass");
+    } else {
+      filterBtn.classList.remove("toggleClass");
+    }
+  }
+  todoFilter = filter;
+  remainderTasks();
+};
+const filteredTodotasks = () => {
+  if (todoFilter === "all") {
+    return tasks;
+  } else if (todoFilter === "active") {
+    return tasks.filter((task) => !task.isComplete);
+  } else if (todoFilter === "completed") {
+    return tasks.filter((task) => task.isComplete);
+  }
+  return tasks;
+};
 
+const updateCounter = () => {
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((task) => task.isComplete).length;
+  const counterDiv = document.querySelector(".task-count");
+  counterDiv.textContent = `${completedTasks} of ${totalTasks} tasks completed`;
+};
+const clearCompleted = () => {
+  tasks = tasks.filter((task) => !task.isComplete);
+  remainderTasks();
+  updateCounter();
+};
 addBtn.addEventListener("click", add);
